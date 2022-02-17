@@ -32,10 +32,3 @@
 	- Irá aplicar as modificações dentro do banco de dados
 
 ---
-# Questões
-
-- WEB SERVER
-- WSGI
-- VIEW
-	- Um trecho de código que executa o script para a página requisitada.
-- MODEL
