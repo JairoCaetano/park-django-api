@@ -1,5 +1,5 @@
 from django.views.generic import View
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
@@ -37,6 +37,6 @@ class CustomerView(View):
                 'message': "PUT | class CustomerView(View)",
             }
         except:
-            raise Http404(f"No id matches the given query. Id = {body['id']}")
+            return HttpResponse(f'Selected id not found. Id = {body["id"]}', status=404)
         return JsonResponse(res)
 

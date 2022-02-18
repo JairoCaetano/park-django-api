@@ -1,2 +1,1 @@
-# from customer.views.fn_views import *
-from customer.views.view import *
+from park.operational.views import *
