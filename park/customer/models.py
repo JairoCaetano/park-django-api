@@ -8,7 +8,7 @@ class Customer(models.Model):
         return self.name
 
 class CustomerVehicles(models.Model):
-    customer_id = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    customer_id = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL, blank=True)
     plate = models.CharField(max_length=10)
     class Kind(models.IntegerChoices):
         CARRO = 1

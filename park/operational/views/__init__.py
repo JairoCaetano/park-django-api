@@ -1,1 +1,1 @@
-from park.operational.views import *
+from operational.views import *

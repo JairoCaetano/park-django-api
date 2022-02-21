@@ -6,26 +6,31 @@ from django.utils import timezone
 import json
 
 from operational.models import ParkMovement
-from customer.models import CustomerVehicles
+from customer.models import CustomerVehicles, Customer
 
 @method_decorator(csrf_exempt, name='dispatch')
 class MovementView(View):
     def post(self, request, *agrs, **kwargs):
         body = json.loads(request.body)
-        movement = ParkMovement(
-        exit_date = body['exit_date'],
-        validate_date = body['validate_date'],
-        value = body['value'],
-        name=body['name']
-            )
-        if "vehicle_id" in body:
-            movement.vehicle_id = body['vehicle_id']
-        res = {
-            'success': True,
-            'name:' : body['name'],
-            'message': "POST | class CustomerView(View)"
-        }
-        movement.save()
+        try:
+            vehicle = CustomerVehicles.objects.get(plate=body['plate'])
+            if not vehicle:
+                vehicle_id = CustomerVehicles.objects.create(
+                plate=body['plate']).id
+            movement = ParkMovement(entry_date=body['entry_date'], plate=body['plate'])
+            movement.save()
+
+            res = {
+                'success': True,
+                'plate:' : body['plate'],
+                'message': "POST | class MovementView(View)"
+            }
+        except Exception as e:
+            res = {
+                'success': False,
+                'message': "POST | class MovementView(View)",
+                'Exception': str(e)
+            }
         return JsonResponse(res)
 
     def put(self, request, *agrs, **kwargs):
